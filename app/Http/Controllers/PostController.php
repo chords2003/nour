@@ -65,9 +65,18 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
+    // public function show(Post $post)
+    // {
+    //     return view('posts.show', compact('post'));
+    // }
+
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+    $post->load(['likes' => function($query) {
+        $query->with('user');
+    }]);
+
+    return view('posts.show', ['post' => $post]);
     }
 
     /**
@@ -119,15 +128,27 @@ class PostController extends Controller
 
 
     }
-    public function like(Request $request, Post $post)
-    {
+    // public function like(Request $request, Post $post)
+    // {
+
+    //     $post->likes()->create([
+    //         'user_id' => auth()->id(),
+    //         'likeable_type' => $request->input('likeable_type')
+    //     ]);
+
+    //     return to_route('posts.show', ['post' => $post->id])->with('success','Thanks for liking!!');
+    // }
+
+    public function like(Request $request, Post $post) {
+
         $post->likes()->create([
-            'user_id' => auth()->id(),
-            'likeable_type' => $request->input('likeable_type')
+          'user_id' => auth()->id(),
+          'likeable_type' => $request->input('likeable_type')
         ]);
 
-        return to_route('posts.show', ['post' => $post->id])->with('success','Thanks for liking!!');
-    }
+        return to_route('posts.show', $post)->with('success', 'Thanks for liking!');
+
+      }
 
 
         //create the hasLikedPost method

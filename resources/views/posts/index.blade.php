@@ -129,7 +129,7 @@
                         <div class="like-block position-relative d-flex align-items-center">
                             <div class="d-flex align-items-center">
                                 @if (Auth::user()->hasNotLikedPost($post) && Auth::user()->id !== $post->user_id)
-                                    <form action="{{ route('like', $post->id) }}" method="POST">
+                                    <form action="{{ route('like',['post' => $post->id])  }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-sm btn-primary mr-2">
                                             <i class="ri-thumb-up-line"></i>
@@ -137,7 +137,7 @@
                                     </form>
                                     {{-- if the post was written by current auth user, then don't show the like or unlike button --}}
                                 @elseif (Auth::user()->hasLikedPost($post))
-                                    <form action="{{ route('unlike', $post->id) }}" method="POST">
+                                    <form action="{{ route('unlike', ['post' => $post->id]) }}" method="POST">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-sm btn-primary mr-2">
@@ -162,15 +162,15 @@
                                             @endif
                                         </span>
                                         @if ($post->likes->count() >= 1)
-                                            @foreach ($post->user->likes as $like)
-                                                <div class="total-like-block ml-12 mr-33">
-                                                    <div class="dropdown">
+                                        <div class="total-like-block ml-12 mr-33">
+                                            {{-- @foreach ($post->likes as $like)
+                                            <div class="dropdown">
                                                         <span class="dropdown-toggle" data-toggle="dropdown"
                                                             aria-haspopup="true" aria-expanded="false" role="button">
-                                                            {{ $like->post->user->name }}
+                                                            {{ $like->user->name }}
                                                         </span>
                                                     </div>
-                                            @endforeach
+                                                    @endforeach --}}
                                         @endif
                                     </div>
                                 </div>
