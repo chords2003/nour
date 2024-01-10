@@ -36,8 +36,8 @@ steps:
   displayName: 'Generate Laravel App Key'
 
 - script: |
-    php vendor/bin/phpunit
-  displayName: 'Run PHPUnit Tests'
+    php vendor/bin/pest
+  displayName: 'Run Pest Tests'
 
 # Additional steps like packaging the app, database migrations, and deployment
 # would go here. These depend on your specific deployment process and environment.
