@@ -11,7 +11,8 @@ pool:
 
 variables:
   group: 'Nour Production Variable'
-  phpVersion: '8.1' # Update this to the PHP version you need
+  name: phpVersion 
+  value: '8.1' # Update this to the PHP version you need
 
 
 steps:
