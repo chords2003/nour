@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - group: 'Nour Production Variable'
+  - group: 'Nour Production Variables'
 
 steps:
 - script: |
