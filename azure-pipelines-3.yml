@@ -40,7 +40,7 @@ steps:
     composer --version
   displayName: 'Update Composer'
 
-- script: composer install --no-interaction --prefer-dist
+- script: composer install --no-interaction --prefer-dist --ignore-platform-reqs
   displayName: 'Install dependencies'
 
 - script: cp .env.example .env
