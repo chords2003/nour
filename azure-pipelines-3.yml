@@ -55,7 +55,8 @@ steps:
 
 # Insert the database migration step here
 - script: |
-    php artisan migrate --force
+
+    
   displayName: 'Run database migrations'
   env:
     DB_CONNECTION: sqlsrv
