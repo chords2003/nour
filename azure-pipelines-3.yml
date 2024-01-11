@@ -10,10 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  group: 'Nour Production Variable'
-  name: phpVersion 
-  value: '8.1' # Update this to the PHP version you need
-
+  - group: 'Nour Production Variable'
 
 steps:
 - script: |
@@ -42,15 +39,23 @@ steps:
     php artisan --version # This will ensure that Laravel is set up properly
   displayName: 'Check Laravel version'
 
+# Insert the database migration step here
 - script: |
-    php artisan migrate --env=testing
-  displayName: 'Run migrations on the testing environment'
+    php artisan migrate --force
+  displayName: 'Run database migrations'
+  env:
+    DB_CONNECTION: sqlsrv
+    DB_HOST: $(DB_HOST)
+    DB_PORT: $(DB_PORT)
+    DB_DATABASE: $(DB_DATABASE)
+    DB_USERNAME: $(DB_USERNAME)
+    DB_PASSWORD: $(DB_PASSWORD)
 
 - script: |
     php vendor/bin/pest
   displayName: 'Run Pest Tests'
 
-# Additional steps like packaging the app, database migrations, and deployment
-# would go here. These depend on your specific deployment process and environment.
+# Additional steps like packaging the app, database migrations, and deployment would go here.
+
 
 
