@@ -12,7 +12,7 @@ pool:
 variables:
   - group: 'Nour Production Variables'
   - name: phpVersion
-    value: '8.3.1' # Replace with your desired PHP version
+    value: '8.3' # Replace with your desired PHP version
 
 steps:
 - script: php -v
@@ -30,6 +30,15 @@ steps:
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer
     php -r "unlink('composer-setup.php');"
   displayName: 'Install Composer'
+
+- script: |
+    echo "Checking Composer version..."
+    composer --version
+    echo "Updating Composer to latest version..."
+    composer self-update
+    echo "Composer updated to:"
+    composer --version
+  displayName: 'Update Composer'
 
 - script: composer install --no-interaction --prefer-dist
   displayName: 'Install dependencies'
