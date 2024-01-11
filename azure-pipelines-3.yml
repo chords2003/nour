@@ -23,6 +23,14 @@ steps:
   displayName: 'Install and check PHP version'
 
 - script: |
+    sudo apt-get install php$(phpVersion)-xml -y
+  displayName: 'Install PHP XML extension'
+  
+- script: |
+    php -m
+  displayName: 'List PHP modules'
+
+- script: |
     sudo update-alternatives --set php /usr/bin/php$(phpVersion)
     sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
     sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
