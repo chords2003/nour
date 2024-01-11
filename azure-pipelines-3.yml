@@ -15,8 +15,12 @@ variables:
     value: '8.3' # Replace with your desired PHP version
 
 steps:
-- script: php -v
-  displayName: 'Check PHP version'
+- script: |
+    sudo add-apt-repository ppa:ondrej/php -y
+    sudo apt-get update
+    sudo apt-get install php$(phpVersion) php$(phpVersion)-common php$(phpVersion)-mysql -y
+    php -v
+  displayName: 'Install and check PHP version'
 
 - script: |
     sudo update-alternatives --set php /usr/bin/php$(phpVersion)
