@@ -14,17 +14,33 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $user = auth()->user();
-        $totalLikes = $user->likes_count;
+    // public function index()
+    // {
+    //     $user = auth()->user();
+    //     $totalLikes = $user->likes_count;
 
-        return view('index', [
-            'posts' => Post::orderBy('updated_at', 'desc')->with(['likes'])->paginate(10),
-            'totalLikes' => $totalLikes,
-            // 'users' => $user,
-        ]);
-    }
+    //     return view('index', [
+    //         'posts' => Post::orderBy('updated_at', 'desc')->with(['likes'])->paginate(10),
+    //         'totalLikes' => $totalLikes,
+    //         // 'users' => $user,
+    //     ]);
+    // }
+//Possible N+1 problem solution
+
+public function index()
+{
+    $user = auth()->user();
+    $totalLikes = $user->likes->count();
+
+    // Eager load the user relationship with the posts
+    $posts = Post::with(['user', 'comments', 'likes'])->orderBy('updated_at', 'desc')->paginate(10);
+
+    return view('index', [
+        'posts' => $posts,
+        'totalLikes' => $totalLikes,
+        'users' => $user,
+    ]);
+}
 
     //create the addMedia method
     /**
